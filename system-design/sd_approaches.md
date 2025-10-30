@@ -1,6 +1,6 @@
 # Thought process for an SD-Interview 
 Follow a structured top-down, iterative method combined with trade-off discussion
-##Execution Steps
+## Execution Steps
     - Clarify Requirments
         - Functional requirments (WHAT a system should do)
         - Non-Functional requirements
