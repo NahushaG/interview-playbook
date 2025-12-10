@@ -1,0 +1,55 @@
+=======================================================================================
+Variant 1: Sing Transaction
+=======================================================================================
+Approach:
+
+Goal -> Find maximum profit from one buy to one sell.
+
+Core Idea -> Keep track of minimum price encountered through the iteration compute the profit that you achieve by selling the Stock
+on the same day using the minimum price. If the profit is more than the current max profit then select that to be returned.
+
+=======================================================================================
+Variant 2: Multiple/Unlimited Transaction
+=======================================================================================
+Approach:
+Goal -> Goal is to capture upward trend to maximize the profit
+Core Idea -> Keep track where current price is greater then the previous  price. Capture the difference and add to profit.
+=======================================================================================
+Variant 3: At Most N(2) Transactions
+=======================================================================================
+Approach:
+Goal-> Capture max profit in 2 transaction
+Core Idea -> For N transaction define n buy and sell phase (for instance n = 2)
+  * Buy1 -> max profit  after first buy ->  max(buy1, -price)
+  * Sell1 -> max profit after first sell -> max(sell1, buy1+price)
+  * Buy2 -> max profit after second buy -> max(buy2, sell1-price)
+  * Sell2 -> max profit after second sell -> max(sell2, buy + price)
+  .
+  .
+  * Buyn -> max(buyn,  sell(n-1)-price)
+  * selln -> max(sell, buy(n-1)+price  )
+=======================================================================================
+Variant 5: Cooldown Period
+=======================================================================================
+Goal -> This variant requires you to consider a cooldown day after selling.
+
+Approach ->
+*  Use Dynamic Programming to keep track of three state
+  - hold :holding a stock today=> 
+    - You must have 
+        * Already holding it
+        * Bought today from the rest state
+    -max(hold[i-1], rest[i-1]-price[i])
+  - cooldown: You sold a stock today, so tomorrow you can buy\
+    -  max(hold[i-1],price[i])
+  - rest : You are not holding a stock and you are not in cooldown.
+    - You either
+        - Were already in rest yesterday or
+        - came out of cooldown
+    - max(rest[i-1], coold[i-1])
+
+* Explanation :
+  Buy Action  : You can buy only at rest (rest -> buy)
+  Sell Action : You can sell only if you were holding (holding -> cooldown)
+  Rest Action : This means you neither buy nor sell (rest -> rest , cooldown -> rest)
+

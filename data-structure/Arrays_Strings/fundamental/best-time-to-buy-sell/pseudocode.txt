@@ -1,0 +1,53 @@
+=======================================================================================
+Variant 1: Sing Transaction
+=======================================================================================
+Steps:
+1. Initialize 'min_price' to a large number and 'max_profit' to 0.
+2. Iterate input array, for each price
+    - Check if its lower tha 'min_price' and update 'min_price' if so.
+    - Calculate the current profit (current price - , min price) 
+    - if this profit is more than current max_profit update the profit.
+3. Return max_profit
+
+=======================================================================================
+Variant 2: Multiple Transaction
+=======================================================================================
+Steps:
+1. Initialize total_profit to 0
+2. Iterate through the prices array from the second element
+3. If the current day's price is greater than the previous day, add the difference to total_profit
+4. Return profit
+=======================================================================================
+Variant 3: Multiple Transaction
+=======================================================================================
+Steps:
+1. Initialize the buy1, buy2 = Integer.MIN_VALUE
+2. Initialize the sell2,sell2 = 0;
+3. Traverse price
+    - buy1 = MAX(buy1, -price)
+    - sell1 =MAX(sell1, buy1 + price)
+    - buy2 = MAX(buy2, sell1-price)
+    - sell2 =MAX(sell2, buy2+price)
+    return sell2
+=======================================================================================
+Variant 5: Cooldown Period
+=======================================================================================
+Steps:
+1. If prices are empty
+    return 0
+
+   hold = -infinity
+   cooldown = 0
+   rest = 0
+
+   for price in prices
+
+        prev_hold = hold
+        prev_cool = cooldown
+        prev_rest = rest
+
+        hold = max(prev_hold, prev_rest-price)
+        cooldown = prev_hold + price
+        rest = max(prev_rest, prev_cool)
+
+        return max(cooldown, rest)
