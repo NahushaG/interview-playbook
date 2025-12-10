@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DSA Problem Viewer</title>
+
+<style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
+    h1, h2 { color: #333; }
+    .section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 10px; }
+    pre { white-space: pre-wrap; background: #fafafa; border: 1px solid #ccc; padding: 15px; border-radius: 8px; }
+</style>
+
+<script>
+// Read ?problem=<foldername>
+function getQueryParam(name) {
+    const url = new URL(window.location.href);
+    return url.searchParams.get(name);
+}
+
+// Load text into a section
+function loadText(id, file) {
+    fetch(file)
+        .then(r => r.text())
+        .then(t => document.getElementById(id).innerText = t)
+        .catch(() => document.getElementById(id).innerText = "(file not found)");
+}
+
+window.onload = function () {
+    const problem = getQueryParam("problem");
+    if (!problem) {
+        alert("Missing ?problem= parameter\nExample: dsa_problem_template.html?problem=Advance/two-sum");
+        return;
+    }
+
+    // Set title nicely
+    const name = problem.split("/").pop().replace(/-/g, " ");
+    document.getElementById("title").innerText = name.toUpperCase();
+
+    // Load all files relative to **this category folder**
+    loadText("desc", `${problem}/description.txt`);
+    loadText("approach", `${problem}/approach.txt`);
+    loadText("pseudo", `${problem}/pseudocode.txt`);
+    loadText("code", `${problem}/code.java`);
+    loadText("tests", `${problem}/tests.txt`);
+
+    // Load diagram
+    document.getElementById("diagram").src = `${problem}/diagram.png`;
+};
+</script>
+</head>
+
+<body>
+
+<h1 id="title">DSA PROBLEM</h1>
+
+<div class="section">
+    <h2>📌 Description</h2>
+    <pre id="desc"></pre>
+</div>
+
+<div class="section">
+    <h2>🎯 Approach</h2>
+    <pre id="approach"></pre>
+</div>
+
+<div class="section">
+    <h2>🧮 Pseudocode</h2>
+    <pre id="pseudo"></pre>
+</div>
+
+<div class="section">
+    <h2>💻 Code</h2>
+    <pre id="code"></pre>
+</div>
+
+<div class="section">
+    <h2>🧪 Test Cases</h2>
+    <pre id="tests"></pre>
+</div>
+
+<div class="section">
+    <h2>🖼 Diagram</h2>
+    <img id="diagram" alt="Diagram" style="max-width: 100%;">
+</div>
+
+</body>
+</html>
